@@ -1,0 +1,27 @@
+name: 중진회의 알림봇
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'   # 월요일 09:00 KST
+    - cron: '0 3 * * 1'   # 월요일 12:00 KST
+    - cron: '0 0 * * 2'   # 화요일 09:00 KST
+    - cron: '0 0 * * 3'   # 수요일 09:00 KST
+    - cron: '0 3 * * 4'   # 목요일 12:00 KST
+    - cron: '0 0 * * 5'   # 금요일 09:00 KST
+    - cron: '0 12 * * 5'  # 금요일 21:00 KST
+    - cron: '0 0 * * 6'   # 토요일 09:00 KST
+  workflow_dispatch:
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - run: pip install python-telegram-bot pytz
+      - run: python send_scheduled.py
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
