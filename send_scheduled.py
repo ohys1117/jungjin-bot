@@ -25,7 +25,10 @@ async def main():
             if row["요일"].strip() != day:
                 continue
             h, m = map(int, row["시간"].strip().split(":"))
-            if abs(now_minutes - (h * 60 + m)) <= 15:
+            sched_minutes = h * 60 + m
+            # 스케줄 시각 이후 0~59분 사이에 실행되면 발송 (중복 방지)
+            diff = now_minutes - sched_minutes
+            if 0 <= diff <= 59:
                 messages.append(row["메시지"].strip())
 
     if not messages:
