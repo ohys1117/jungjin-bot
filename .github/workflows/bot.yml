@@ -2,7 +2,7 @@ name: 중진회의 알림봇
 
 on:
   schedule:
-    - cron: '5 * * * *'   # 매시간 5분에 실행 (정각 부하 회피)
+    - cron: '/10 * * * *'
   workflow_dispatch:
 
 jobs:
