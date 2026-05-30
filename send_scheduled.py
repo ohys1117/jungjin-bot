@@ -7,10 +7,9 @@ from telegram import Bot
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
+
 KST = pytz.timezone("Asia/Seoul")
-
 DAY_NAMES = {0: "월요일", 1: "화요일", 2: "수요일", 3: "목요일", 4: "금요일", 5: "토요일", 6: "일요일"}
-
 
 async def main():
     now = datetime.now(KST)
@@ -26,9 +25,8 @@ async def main():
                 continue
             h, m = map(int, row["시간"].strip().split(":"))
             sched_minutes = h * 60 + m
-            # 스케줄 시각 이후 0~59분 사이에 실행되면 발송 (중복 방지)
             diff = now_minutes - sched_minutes
-            if -10 <= diff <= 10:
+            if 0 <= diff <= 12:
                 messages.append(row["메시지"].strip())
 
     if not messages:
@@ -39,6 +37,5 @@ async def main():
         for msg in messages:
             await bot.send_message(chat_id=CHAT_ID, text=msg)
             print(f"전송 완료: {msg[:30]}...")
-
 
 asyncio.run(main())
