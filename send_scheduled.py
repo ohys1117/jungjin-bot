@@ -32,7 +32,7 @@ async def main():
         h, m = map(int, row["시간"].strip().split(":"))
         sched_minutes = h * 60 + m
         diff = now_minutes - sched_minutes
-        if 0 <= diff <= 12:
+        if 0 <= diff <= 7:
             messages.append(row["메시지"].strip())
 
     if not messages:
