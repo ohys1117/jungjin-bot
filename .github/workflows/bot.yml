@@ -1,10 +1,8 @@
 name: 중진회의 알림봇
-
 on:
   schedule:
-    - cron: '/10 * * * *'
+    - cron: '0,10,20,30,40,50 * * * *'
   workflow_dispatch:
-
 jobs:
   send:
     runs-on: ubuntu-latest
